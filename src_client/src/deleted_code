@@ -1,0 +1,79 @@
+public void paint(Graphics g)
+    {
+        g.setFont(new Font("",0,100));
+        FontMetrics fm = getFontMetrics(new Font("",0,100));
+        String s = "shit";
+        int x = 5;
+        int y = 5;
+        for (int i = 0; i < s.length(); i++) 
+        {
+            char c = s.charAt(i);
+            int h = fm.getHeight();
+            int w = fm.charWidth(c);
+            g.drawRect(x, y, w, h);
+            g.drawString(String.valueOf(c), x, y + h);
+            x = x + w;
+        }
+        int w=3, h=6;
+        Shape rectangle= new Rectangle2D.Float(x,y,w,h);
+    }
+
+ protected void paintHorizontallyCenteredText(Graphics2D g2,String s, float centerX, float baselineY) 
+    {
+        FontRenderContext frc = g2.getFontRenderContext();
+        Rectangle2D bounds = g2.getFont().getStringBounds(s, frc);
+        
+        float width = (float) bounds.getWidth();
+        g2.drawString(s, centerX - width / 2, baselineY);
+    }
+
+        int[] pixels = new int[16 * 16];
+        Image image = Toolkit.getDefaultToolkit().createImage(
+        new MemoryImageSource(16, 16, pixels, 0, 16));
+        Cursor transparentCursor = Toolkit.getDefaultToolkit().
+        createCustomCursor(image, new Point(0, 0), "invisibleCursor");
+        System.out.println("Transparent Cursor created.");
+
+
+
+public void update(Graphics g)
+{
+    this.paint(g);
+}
+
+public void repaint()
+{
+    this.update(this.getGraphics());
+}
+
+//debug ------------------------------------------------------------
+                boolean stillcon= true;
+                Player p = new Player(10, 10);
+                msg = new Message(Message.MsgType.MSG_TOPEERS, p);
+                
+                msg.mSender= 1;
+                streamToServer.writeObject( msg);
+                System.out.println(ok+"message sent! processing "+ msg.getInfo());
+                
+                p.set_poz(15, 25);
+                //p= new Player(15, 25);
+                msg= new Message(Message.MsgType.MSG_TOPEERS, p);
+                streamToServer.writeObject(msg );
+                System.out.println(ok+"message sent! processing "+ msg.getInfo());
+                if (stillcon)
+                    System.exit(0);
+            //end debug ------------------------------------------------------------
+
+
+
+ //debug ------------------------------------------------------------
+
+                msg = (Message) streamFromClient.readObject();
+                System.out.println(ok+"message received! processing "+ msg.getInfo());
+                
+                msg= null;
+                msg = (Message) streamFromClient.readObject();
+                System.out.println(ok+"message received! processing "+ msg.getInfo());
+                if (stillConnected)
+                    System.exit(0);
+            //end debug ------------------------------------------------------------
